@@ -31,7 +31,7 @@ namespace Movies.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MoviesApiContext>(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
+                options.UseInMemoryDatabase("Movies")
 );
 
             services.AddControllers();
