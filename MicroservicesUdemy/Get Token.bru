@@ -6,6 +6,13 @@ meta {
 
 post {
   url: https://localhost:5005/connect/token
-  body: none
+  body: formUrlEncoded
   auth: none
+}
+
+body:form-urlencoded {
+  grant_type: client_credentials
+  scope: movieAPI
+  client_Id: movieClient
+  client_secret: secret
 }
