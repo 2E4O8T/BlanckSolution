@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Movies.Client.ApiServices;
-using Movies.Client.Data;
+//using Movies.Client.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
