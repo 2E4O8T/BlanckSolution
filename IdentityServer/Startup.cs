@@ -28,10 +28,10 @@ namespace IdentityServer
                 //.AddTestUsers(new List<TestUser>())
                 //.AddDeveloperSigningCredential();
                 .AddInMemoryClients(Config.Clients)
-                //.AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryIdentityResources(Config.IdentityResources)
                 //.AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                //.AddTestUsers(Config.TestUsers)
+                .AddTestUsers(Config.TestUsers)
                 .AddDeveloperSigningCredential();
         }
 
@@ -46,6 +46,7 @@ namespace IdentityServer
             app.UseStaticFiles();
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
