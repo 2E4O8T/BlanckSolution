@@ -48,10 +48,14 @@ namespace Movies.Client
 
                     options.ClientId = "movies_mvc_client";
                     options.ClientSecret = "secret";
-                    options.ResponseType = "code";
+                    //options.ResponseType = "code";
+                    // Hybrid Flow
+                    options.ResponseType = "code id_token";
 
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
+                    // Hybrid Flow
+                    options.Scope.Add("movieAPI");
 
                     options.SaveTokens = true;
 
@@ -76,13 +80,15 @@ namespace Movies.Client
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
             });
 
-            services.AddSingleton(new ClientCredentialsTokenRequest
-            {
-                Address = "https://localhost:5005/connect/token",
-                ClientId = "movieClient",
-                ClientSecret = "secret",
-                Scope = "movieAPI"
-            });
+            services.AddHttpContextAccessor();
+            // Hybrid Flow
+            //services.AddSingleton(new ClientCredentialsTokenRequest
+            //{
+            //    Address = "https://localhost:5005/connect/token",
+            //    ClientId = "movieClient",
+            //    ClientSecret = "secret",
+            //    Scope = "movieAPI"
+            //});
 
             //services.AddDbContext<MoviesClientContext>(options =>
             //    options.UseInMemoryDatabase("Movies"));
