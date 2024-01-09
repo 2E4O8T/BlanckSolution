@@ -1,4 +1,6 @@
+using IdentityModel;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Movies.Client.ApiServices;
 using Movies.Client.HttpHandlers;
@@ -52,14 +55,27 @@ namespace Movies.Client
                     // Hybrid Flow
                     options.ResponseType = "code id_token";
 
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
+                    // Section 10
+                    // options.Scope.Add("openid");
+                    //options.Scope.Add("profile");
+                    options.Scope.Add("address");
+                    options.Scope.Add("email");
                     // Hybrid Flow
                     options.Scope.Add("movieAPI");
+                    // Section 10
+                    options.Scope.Add("roles");
+
+                    options.ClaimActions.MapUniqueJsonKey("role", "role");
 
                     options.SaveTokens = true;
 
                     options.GetClaimsFromUserInfoEndpoint = true;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = JwtClaimTypes.GivenName,
+                        RoleClaimType = JwtClaimTypes.Role
+                    };
                 });
 
             // 1. Create an HttpClient used for accessing the Movies API
@@ -81,6 +97,7 @@ namespace Movies.Client
             });
 
             services.AddHttpContextAccessor();
+
             // Hybrid Flow
             //services.AddSingleton(new ClientCredentialsTokenRequest
             //{

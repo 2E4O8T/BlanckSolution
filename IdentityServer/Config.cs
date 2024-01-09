@@ -49,7 +49,10 @@ namespace IdentityServer
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile, "movieAPI"
+                        IdentityServerConstants.StandardScopes.Profile, "movieAPI",
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "roles"      
                     }
                 }
             };
@@ -69,7 +72,13 @@ namespace IdentityServer
           new IdentityResource[]
           {
               new IdentityResources.OpenId(),
-              new IdentityResources.Profile()
+              new IdentityResources.Profile(),
+              new IdentityResources.Address(),
+              new IdentityResources.Email(),
+              new IdentityResource(
+                  "roles",
+                  "Your role(s)",
+                  new List<string>() { "role" })
           };
 
         public static List<TestUser> TestUsers =>
